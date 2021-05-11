@@ -22,33 +22,33 @@ public class Util {
     public Util() {}
 
     public Connection getConnection() {
-
-        try {
-            Class.forName(DRIVER);
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
-            return connection;
-        } catch (ClassNotFoundException e) {
-            if(connection != null){
-                try {
-                    connection.close();
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                }
-            }
-            e.printStackTrace();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+//
+//        try {
+//            Class.forName(DRIVER);
+//            connection = DriverManager.getConnection(URL, USER, PASSWORD);
+//            return connection;
+//        } catch (ClassNotFoundException e) {
+//            if(connection != null){
+//                try {
+//                    connection.close();
+//                } catch (SQLException throwables) {
+//                    throwables.printStackTrace();
+//                }
+//            }
+//            e.printStackTrace();
+//        } catch (SQLException throwables) {
+//            throwables.printStackTrace();
+//        }
         return null;
     }
 
     public void closeConnection(){
-        try {
-            connection.close();
-            connection = null;
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+//        try {
+//            connection.close();
+//            connection = null;
+//        } catch (SQLException throwables) {
+//            throwables.printStackTrace();
+//        }
     }
 
 
@@ -62,11 +62,11 @@ public class Util {
                 settings.put(Environment.URL, "jdbc:mysql://localhost:3306/mydbtest?useSSL=false&serverTimezone=UTC");
                 settings.put(Environment.USER, "root");
                 settings.put(Environment.PASS, "1234567890Ds");
-                settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
+                settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQL8Dialect");
 
-                settings.put(Environment.SHOW_SQL, "true");
+                //settings.put(Environment.SHOW_SQL, "true");
 
-                settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
+                //settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
 
                 settings.put(Environment.HBM2DDL_AUTO, "create-drop");
 
