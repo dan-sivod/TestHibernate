@@ -13,10 +13,7 @@ public class UserDaoHibernateImpl implements UserDao {
 
     private Util util = new Util();
 
-    public UserDaoHibernateImpl() {
-
-    }
-
+    public UserDaoHibernateImpl() {}
 
     @Override
     public void createUsersTable() {
@@ -39,7 +36,6 @@ public class UserDaoHibernateImpl implements UserDao {
             }
         } finally {
             if (session != null) {
-                session.flush();
                 session.close();
             }
         }
@@ -49,10 +45,11 @@ public class UserDaoHibernateImpl implements UserDao {
     public void dropUsersTable() {
         Transaction transaction = null;
         Session session = null;
-        String query = "DROP TABLE IF EXISTS users;";
+        String query = "delete from users;";
         try {
             session = util.getSessionFactory().openSession();
             transaction = session.beginTransaction();
+            //session.createQuery("from User");
             session.createSQLQuery(query);
             transaction.commit();
         } catch (Exception e) {
@@ -61,7 +58,6 @@ public class UserDaoHibernateImpl implements UserDao {
             }
         } finally {
             if (session != null) {
-                session.flush();
                 session.close();
             }
         }
@@ -83,7 +79,6 @@ public class UserDaoHibernateImpl implements UserDao {
             }
         } finally {
             if (session != null) {
-                session.flush();
                 session.close();
             }
         }
@@ -97,7 +92,7 @@ public class UserDaoHibernateImpl implements UserDao {
         try {
             session = util.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            User user = (User) session.load(User.class, ((int) id));
+            User user = (User) session.load(User.class, id);
             session.delete(user);
             transaction.commit();
         } catch (Exception e) {
@@ -106,7 +101,6 @@ public class UserDaoHibernateImpl implements UserDao {
             }
         } finally {
             if (session != null) {
-                session.flush();
                 session.close();
             }
         }
@@ -114,13 +108,13 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public List<User> getAllUsers() {
-        List<User> users = new ArrayList<User>();
+        List<User> users = new ArrayList<>();
         Transaction transaction = null;
         Session session = null;
         try {
             session = util.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            users = session.createSQLQuery("FROM users").list();
+            users = session.createQuery("from User").getResultList();
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -128,7 +122,6 @@ public class UserDaoHibernateImpl implements UserDao {
             }
         } finally {
             if (session != null) {
-                session.flush();
                 session.close();
             }
             return users;
@@ -139,7 +132,7 @@ public class UserDaoHibernateImpl implements UserDao {
     public void cleanUsersTable() {
         Transaction transaction = null;
         Session session = null;
-        String query = "TRUNCATE TABLE users;";
+        String query = "clean from users;";
         try {
             session = util.getSessionFactory().openSession();
             transaction = session.beginTransaction();
@@ -151,7 +144,6 @@ public class UserDaoHibernateImpl implements UserDao {
             }
         } finally {
             if (session != null) {
-                session.flush();
                 session.close();
             }
         }
