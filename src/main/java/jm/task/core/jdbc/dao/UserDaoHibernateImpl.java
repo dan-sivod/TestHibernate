@@ -45,11 +45,10 @@ public class UserDaoHibernateImpl implements UserDao {
     public void dropUsersTable() {
         Transaction transaction = null;
         Session session = null;
-        String query = "delete from users;";
+        String query = "DROP TABLE IF EXISTS users;";
         try {
             session = util.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            //session.createQuery("from User");
             session.createSQLQuery(query);
             transaction.commit();
         } catch (Exception e) {
@@ -132,7 +131,7 @@ public class UserDaoHibernateImpl implements UserDao {
     public void cleanUsersTable() {
         Transaction transaction = null;
         Session session = null;
-        String query = "clean from users;";
+        String query = "TRUNCATE TABLE users;";
         try {
             session = util.getSessionFactory().openSession();
             transaction = session.beginTransaction();
