@@ -4,6 +4,7 @@ import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -27,7 +28,8 @@ public class UserDaoHibernateImpl implements UserDao {
 
         try (Session session = util.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.createSQLQuery(query);
+            Query oQuery = session.createSQLQuery(query).addEntity(User.class);
+            oQuery.executeUpdate();
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -44,7 +46,8 @@ public class UserDaoHibernateImpl implements UserDao {
 
         try (Session session = util.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.createSQLQuery(query);
+            Query oQuery = session.createSQLQuery(query).addEntity(User.class);
+            oQuery.executeUpdate();
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -110,15 +113,12 @@ public class UserDaoHibernateImpl implements UserDao {
     public void cleanUsersTable() {
 
         Transaction transaction = null;
-        //String query = "TRUNCATE TABLE users;";
+        String query = "TRUNCATE TABLE users;";
 
         try (Session session = util.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            final List<?> instances = session.createQuery("from User").getResultList();
-            for (Object obj : instances) {
-                session.delete(obj);
-            }
-            //session.createSQLQuery(query);
+            Query oQuery = session.createSQLQuery(query).addEntity(User.class);
+            oQuery.executeUpdate();
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
